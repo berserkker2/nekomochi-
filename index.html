@@ -131,18 +131,24 @@
         .tooltip-title { color: white; font-weight: 800; font-size: 0.75rem; margin-bottom: 4px; }
         .tooltip-meta { color: var(--accent); font-weight: 700; font-size: 0.65rem; }
 
-        /* Modal - Desktop (unchanged) */
+        /* Modal - Desktop with buttons pinned to bottom */
         #details-modal { display: none; position: fixed; inset: 0; background: rgba(5, 10, 15, 0.95); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(8px); }
-        .modal-content { background: var(--card); width: 95%; max-width: 1000px; height: 80vh; border-radius: 12px; display: flex; overflow: hidden; position: relative; border: 1px solid #253244; }
+        .modal-content { background: var(--card); width: 95%; max-width: 1000px; height: 85vh; max-height: 85vh; border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; position: relative; border: 1px solid #253244; }
+        .modal-body { display: flex; flex: 1; overflow: hidden; min-height: 0; }
         .close-btn { position: absolute; top: 20px; right: 20px; font-size: 2.5rem; color: white; cursor: pointer; z-index: 10; background: none; width: auto; height: auto; border-radius: 0; backdrop-filter: none; }
-        .modal-left { width: 35%; height: 100%; border-right: 1px solid #253244; }
+        .modal-left { width: 35%; height: 100%; border-right: 1px solid #253244; flex-shrink: 0; overflow: hidden; }
         .modal-left img { width: 100%; height: 100%; object-fit: cover; }
-        .modal-right { width: 65%; display: flex; flex-direction: column; padding: 40px; color: white; overflow-y: auto; }
-        .synopsis-scroll { flex-grow: 1; overflow-y: auto; color: var(--text); line-height: 1.7; margin: 20px 0; border-top: 1px solid #253244; padding-top: 20px;}
-        .modal-btn { padding: 12px; border-radius: 8px; text-decoration: none; font-weight: 800; text-transform: uppercase; font-size: 0.75rem; flex: 1; text-align: center; color: white; border: none; cursor: pointer; transition: 0.2s; }
+        .modal-right { width: 65%; display: flex; flex-direction: column; padding: 30px; color: white; overflow-y: auto; flex: 1; min-height: 0; }
+        /* Scrollable content area that takes available space */
+        .modal-scroll-content { flex: 1; overflow-y: auto; min-height: 0; }
+        .synopsis-scroll { color: var(--text); line-height: 1.6; margin: 15px 0; padding-top: 15px; border-top: 1px solid #253244; }
+        /* Buttons container pinned at bottom on desktop */
+        .modal-buttons-footer { margin-top: auto; padding-top: 20px; border-top: 1px solid #253244; }
+        .modal-btn { padding: 12px; border-radius: 8px; text-decoration: none; font-weight: 800; text-transform: uppercase; font-size: 0.75rem; flex: 1; text-align: center; color: white; border: none; cursor: pointer; transition: 0.2s; display: inline-block; }
+        .modal-buttons-row { display: flex; gap: 12px; flex-wrap: wrap; }
         
         .mini-btn { padding: 7px 16px; font-size: 0.75rem; background: var(--anilist); color: white; border-radius: 4px; font-weight: 800; text-transform: uppercase; text-decoration: none; display: inline-block; }
-        .pill { padding: 5px 12px; border-radius: 50px; font-weight: 800; font-size: 0.75rem; border: 1px solid transparent; margin-right: 10px; }
+        .pill { padding: 5px 12px; border-radius: 50px; font-weight: 800; font-size: 0.75rem; border: 1px solid transparent; margin-right: 10px; display: inline-block; }
         .score-pill { background: rgba(241, 196, 15, 0.1); color: var(--rating-gold); border-color: var(--rating-gold); }
         .demo-pill { background: rgba(168, 85, 247, 0.1); color: var(--demo-purple); border-color: var(--demo-purple); text-transform: uppercase; }
         .btn { background: var(--accent); color: var(--bg); border: none; padding: 10px 20px; border-radius: 6px; font-weight: 800; cursor: pointer; text-transform: uppercase; font-size: 0.75rem; }
@@ -163,7 +169,7 @@
         .mobile-nav-btn { background: none; border: none; color: var(--text); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; cursor: pointer; padding: 8px 12px; transition: color 0.2s; letter-spacing: 0.3px; border-radius: 30px; }
         .mobile-nav-btn.active, .mobile-nav-btn:hover { color: var(--accent); background: rgba(61,187,238,0.08); }
 
-        /* ===== FULLY OPTIMIZED MOBILE MODAL ===== */
+        /* Mobile Modal - adjusted for new structure */
         @media (max-width: 768px) {
             :root { --nav-height: 56px; }
             .site-header { padding: 0 16px; }
@@ -186,7 +192,7 @@
             .calendar-grid { gap: 4px; padding: 8px; }
             .calendar-day { min-height: 80px; padding: 22px 4px 4px 4px; }
             
-            /* Mobile Modal - landscape & portrait, synopsis limited to 4-5 lines */
+            /* Mobile Modal - restructured */
             #details-modal { align-items: flex-end; }
             .modal-content { 
                 flex-direction: column; 
@@ -199,141 +205,42 @@
                 animation: slideUp 0.25s ease-out;
                 overflow: hidden;
             }
+            .modal-body { flex-direction: column; overflow-y: auto; }
             @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
             
-            .modal-left { 
-                width: 100%; 
-                height: 200px; 
-                border-right: none; 
-                border-bottom: 2px solid rgba(61,187,238,0.2);
-                flex-shrink: 0;
-                background: #0a111c;
-            }
-            .modal-left img { object-fit: cover; object-position: center 20%; width: 100%; height: 100%; }
+            .modal-left { width: 100%; height: 200px; border-right: none; border-bottom: 2px solid rgba(61,187,238,0.2); flex-shrink: 0; }
+            .modal-left img { object-fit: cover; object-position: center 20%; }
+            .modal-right { width: 100%; padding: 18px 16px 20px 16px; overflow-y: auto; }
+            .modal-scroll-content { overflow-y: visible; }
+            .modal-buttons-footer { margin-top: 12px; padding-top: 12px; }
             
-            .modal-right { 
-                width: 100%; 
-                padding: 18px 16px 20px 16px; 
-                overflow-y: auto;
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                gap: 6px;
-                max-height: calc(92vh - 200px);
-            }
-            
-            .close-btn { 
-                top: 10px; 
-                right: 14px; 
-                font-size: 1.8rem; 
-                background: rgba(0,0,0,0.6); 
-                width: 36px; 
-                height: 36px; 
-                display: flex; 
-                align-items: center; 
-                justify-content: center;
-                border-radius: 40px;
-                backdrop-filter: blur(8px);
-                z-index: 20;
-                color: white;
-                line-height: 1;
-            }
-            
-            #modal-title { font-size: 1.35rem !important; font-weight: 800; line-height: 1.25; margin-bottom: 4px; letter-spacing: -0.2px; }
-            
-            .modal-right > div:first-of-type { flex-wrap: wrap; gap: 6px; margin-bottom: 4px; display: flex; align-items: center; }
+            .close-btn { top: 10px; right: 14px; font-size: 1.8rem; background: rgba(0,0,0,0.6); width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 40px; backdrop-filter: blur(8px); z-index: 20; color: white; line-height: 1; }
+            #modal-title { font-size: 1.35rem !important; font-weight: 800; line-height: 1.25; margin-bottom: 4px; }
             #modal-airing-info { font-size: 0.7rem; background: rgba(61,187,238,0.15); padding: 4px 12px; border-radius: 40px; display: inline-block; white-space: nowrap; }
             #modal-year { font-size: 0.7rem; background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 40px; }
-            
-            .pill { padding: 4px 12px; font-size: 0.7rem; margin-right: 8px; margin-bottom: 4px; display: inline-block; }
-            
-            .modal-right > div[style*="display:flex; margin-bottom:15px; align-items: center;"] { 
-                display: flex; 
-                flex-wrap: wrap; 
-                gap: 8px; 
-                margin-bottom: 8px; 
-                align-items: center;
-            }
-            #add-to-list-btn { 
-                margin-left: 0 !important; 
-                max-width: 100%; 
-                width: auto; 
-                background: var(--green); 
-                border-radius: 40px; 
-                padding: 8px 16px; 
-                font-size: 0.7rem;
-                flex: 0 0 auto;
-            }
-            
+            .pill { padding: 4px 12px; font-size: 0.7rem; margin-right: 8px; margin-bottom: 4px; }
+            #add-to-list-btn { margin-left: 0 !important; max-width: 100%; width: auto; background: var(--green); border-radius: 40px; padding: 8px 16px; font-size: 0.7rem; flex: 0 0 auto; }
             #modal-genres { display: flex; flex-wrap: wrap; gap: 6px; margin: 2px 0 6px 0; }
             #modal-genres span { font-size: 0.65rem; padding: 3px 10px; background: rgba(61,187,238,0.08); border-radius: 30px; white-space: nowrap; }
-            
-            /* Synopsis: max 5 lines, scrollable if more, but compact */
-            .synopsis-scroll { 
-                font-size: 0.8rem; 
-                line-height: 1.4; 
-                margin: 6px 0 8px 0; 
-                padding-top: 8px;
-                max-height: 6.5em; /* roughly 4-5 lines */
-                overflow-y: auto;
-                scrollbar-width: thin;
-                border-top: 1px solid #253244;
-                border-bottom: none;
-            }
-            
-            /* Streaming links: horizontally scrollable on landscape, wrap on portrait */
-            #modal-links { 
-                display: flex; 
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                gap: 10px; 
-                margin-top: 4px;
-                padding-bottom: 8px;
-                scrollbar-width: thin;
-                -webkit-overflow-scrolling: touch;
-            }
-            .modal-btn { 
-                flex: 0 0 auto; 
-                padding: 8px 16px; 
-                font-size: 0.7rem; 
-                border-radius: 40px;
-                min-width: 80px;
-                text-align: center;
-                white-space: nowrap;
-            }
-            
+            .synopsis-scroll { font-size: 0.8rem; line-height: 1.4; margin: 6px 0 0 0; padding-top: 8px; max-height: 6.5em; overflow-y: auto; border-top: 1px solid #253244; }
+            #modal-links { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 10px; margin-top: 4px; padding-bottom: 8px; scrollbar-width: thin; -webkit-overflow-scrolling: touch; }
+            .modal-btn { flex: 0 0 auto; padding: 8px 16px; font-size: 0.7rem; border-radius: 40px; min-width: 80px; text-align: center; white-space: nowrap; }
             .mini-btn { font-size: 0.7rem; padding: 5px 12px; border-radius: 40px; }
             #preview-tooltip { display: none !important; }
             
-            /* Landscape orientation specific: even more compact synopsis, scrollable buttons row */
             @media (orientation: landscape) and (max-height: 550px) {
-                .modal-left { height: 130px; }
-                .modal-right { max-height: calc(92vh - 130px); padding: 10px 14px; gap: 4px; }
+                .modal-left { height: 120px; }
+                .modal-right { padding: 12px 14px; }
                 #modal-title { font-size: 1.15rem !important; margin-bottom: 2px; }
                 .synopsis-scroll { max-height: 4.2em; font-size: 0.75rem; margin: 4px 0; padding-top: 5px; }
                 .modal-btn { padding: 6px 12px; min-width: 70px; font-size: 0.65rem; }
                 #add-to-list-btn { padding: 6px 12px; font-size: 0.65rem; }
-                #modal-genres span { font-size: 0.6rem; padding: 2px 8px; }
                 .close-btn { width: 28px; height: 28px; font-size: 1.4rem; top: 6px; right: 10px; }
-                .pill { padding: 3px 10px; font-size: 0.65rem; }
-                #modal-airing-info, #modal-year { font-size: 0.65rem; }
+                .modal-buttons-footer { margin-top: 8px; padding-top: 8px; }
             }
-            
-            /* When landscape but very narrow (e.g., foldables) */
-            @media (orientation: landscape) and (max-height: 450px) {
-                .modal-left { height: 110px; }
-                .synopsis-scroll { max-height: 3.5em; }
-                .modal-right { gap: 2px; }
-            }
-            
-            /* Extra small portrait devices */
             @media (max-width: 400px) and (orientation: portrait) {
-                .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-                .compact-grid { grid-template-columns: repeat(4, 1fr); }
-                .modal-left { height: 170px; }
+                .modal-left { height: 160px; }
                 .modal-right { padding: 14px; }
-                .modal-btn { padding: 7px 12px; min-width: 65px; }
-                #add-to-list-btn { padding: 7px 12px; }
                 #modal-title { font-size: 1.2rem !important; }
                 .synopsis-scroll { max-height: 6em; }
             }
@@ -382,11 +289,42 @@
         <div id="foryou-container"></div><div id="mylists-container"></div><div class="grid" id="anime-grid"></div>
     </div>
 
-    <div id="details-modal"><div class="modal-content"><span class="close-btn" onclick="closeModal()">&times;</span><div class="modal-left" id="modal-img-container"></div><div class="modal-right"><div id="modal-title" style="font-size: 2rem; font-weight: 800; margin-bottom:5px;"></div><div style="display:flex; align-items:center; gap:15px; margin-bottom:15px; flex-wrap:wrap;"><div id="modal-airing-info" style="color:var(--accent); font-weight:800; font-size:0.85rem; text-transform:uppercase;"></div><div id="modal-year" style="color:var(--text); font-weight:700; font-size:0.85rem;"></div></div><div style="display:flex; margin-bottom:15px; align-items: center; flex-wrap:wrap; gap:10px;"><div id="modal-score" class="pill score-pill"></div><div id="modal-demo" class="pill demo-pill"></div><button id="add-to-list-btn" class="modal-btn" style="background:var(--green); color:var(--bg);">+ Start Watching</button></div><div style="display:flex; flex-direction: column; gap:12px; margin-bottom:20px;"><div id="modal-genres" style="display:flex; flex-wrap:wrap; gap:8px;"></div><div id="modal-anilist-link-container"></div></div><div class="synopsis-scroll" id="modal-synopsis"></div><div style="display:flex; gap:12px; flex-wrap: wrap;" id="modal-links"></div></div></div></div>
+    <!-- Modal with new structure: body + footer for pinned buttons -->
+    <div id="details-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div class="modal-body">
+                <div class="modal-left" id="modal-img-container"></div>
+                <div class="modal-right">
+                    <div class="modal-scroll-content">
+                        <div id="modal-title" style="font-size: 2rem; font-weight: 800; margin-bottom:5px;"></div>
+                        <div style="display:flex; align-items:center; gap:15px; margin-bottom:12px; flex-wrap:wrap;">
+                            <div id="modal-airing-info" style="color:var(--accent); font-weight:800; font-size:0.85rem; text-transform:uppercase;"></div>
+                            <div id="modal-year" style="color:var(--text); font-weight:700; font-size:0.85rem;"></div>
+                        </div>
+                        <div style="display:flex; margin-bottom:12px; align-items: center; flex-wrap:wrap; gap:10px;">
+                            <div id="modal-score" class="pill score-pill"></div>
+                            <div id="modal-demo" class="pill demo-pill"></div>
+                            <button id="add-to-list-btn" class="modal-btn" style="background:var(--green); color:var(--bg);">+ Start Watching</button>
+                        </div>
+                        <div style="display:flex; flex-direction: column; gap:12px; margin-bottom:15px;">
+                            <div id="modal-genres" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
+                            <div id="modal-anilist-link-container"></div>
+                        </div>
+                        <div class="synopsis-scroll" id="modal-synopsis"></div>
+                    </div>
+                    <div class="modal-buttons-footer">
+                        <div class="modal-buttons-row" id="modal-links"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="confirm-popup"><div class="popup-box"><div style="color:white; font-weight:800; font-size:1.2rem; margin-bottom:10px;">Remove Anime?</div><div style="color:var(--text); font-size:0.9rem; margin-bottom:25px; line-height:1.4;">This will remove the show from your AniList watchlist and reset your progress.</div><div class="popup-btns"><button class="modal-btn" style="background:#253244;" onclick="closeConfirm()">Cancel</button><button id="confirm-delete-btn" class="modal-btn" style="background:var(--danger);">Remove</button></div></div></div>
 
 <script>
-    // FULL SCRIPT (All functionality identical)
+    // Full script with all functionality (identical to original, only modal structure updated)
     let currentPage = 1;
     let homeView = localStorage.getItem('home_view') || 'latest';
     let currentView = homeView;
@@ -454,7 +392,37 @@
     async function removeFromAniList(entryId, btn, mediaId) { const delBtn = document.getElementById('confirm-delete-btn'); delBtn.innerText = "..."; try { const res = await apiFetch(`mutation($id: Int) { DeleteMediaListEntry(id: $id) { deleted } }`, { id: entryId }, true); if(res.data?.DeleteMediaListEntry?.deleted) { closeConfirm(); btn.innerText = "+ Start Watching"; btn.style.background = "var(--green)"; btn.style.color = "var(--bg)"; btn.onclick = () => addToAniList(mediaId, btn); } } catch(e) { alert("Error removing entry."); } finally { delBtn.innerText = "Remove"; } }
     async function fetchImdbId(anilistId) { if (imdbCache.has(anilistId)) return imdbCache.get(anilistId); try { const res = await fetch(`https://arm.haglund.dev/api/v2/ids?source=anilist&id=${anilistId}`); const data = await res.json(); const imdbId = data?.imdb || null; imdbCache.set(anilistId, imdbId); return imdbId; } catch(e) { return null; } }
     
-    function openModal(enc) { closeCalendarPopover(); const m = JSON.parse(decodeURIComponent(escape(atob(enc)))); const d = new Date(m.airingAt * 1000); const dayTime = m.airingAt > 0 ? d.toLocaleDateString([], {weekday:'long', hour:'2-digit', minute:'2-digit'}) : (m.status || "N/A"); const addBtn = document.getElementById('add-to-list-btn'); addBtn.innerText = "+ Start Watching"; addBtn.style.background = "var(--green)"; addBtn.style.color = "var(--bg)"; addBtn.onclick = () => addToAniList(m.id, addBtn); checkStatus(m.id, addBtn); document.getElementById('modal-title').innerText = m.title.romaji; document.getElementById('modal-airing-info').innerHTML = `EP ${m.episode} // ${dayTime}`; document.getElementById('modal-year').innerText = m.seasonYear || ""; document.getElementById('modal-img-container').innerHTML = `<img src="${m.coverImage.extraLarge}">`; document.getElementById('modal-synopsis').innerHTML = m.description || ""; document.getElementById('modal-score').innerText = `★ ${m.averageScore ? (m.averageScore/10).toFixed(1) : 'N/A'}`; const demo = m.tags.find(t => t.category === "Demographic"); document.getElementById('modal-demo').innerText = demo ? demo.name : "N/A"; document.getElementById('modal-genres').innerHTML = m.genres.slice(0,3).map(g => `<span>${g}</span>`).join(''); document.getElementById('modal-anilist-link-container').innerHTML = `<div style="margin-top: 5px;"><a href="https://anilist.co/anime/${m.id}" target="_blank" class="mini-btn">AniList Hub</a></div>`; const extLinks = {}; (m.externalLinks || []).forEach(link => { extLinks[link.site.toLowerCase()] = link.url; }); function streamUrl(service, searchUrl) { const aliases = { netflix: ['netflix'], crunchyroll: ['crunchyroll'], disney: ['disney plus', 'disney+', 'disneyplus'], }; const candidates = aliases[service] || []; for (const name of candidates) { if (extLinks[name]) return { url: extLinks[name], direct: true }; } return { url: searchUrl, direct: false }; } let linksHtml = `<a href="https://myanimelist.net/anime/${m.idMal}" target="_blank" class="modal-btn" style="background:var(--mal)">MAL</a>`; activeStreams.forEach(s => { let result; let color = "var(--accent)"; let label = s; if(s === 'stremio') { result = { url: `stremio:///search?search=${encodeURIComponent(m.title.romaji)}`, direct: false }; color = "var(--stremio)"; linksHtml += `<a id="stremio-link-btn" href="${result.url}" class="modal-btn" style="background:${color}">Stremio</a>`; return; } else if(s === 'netflix') { result = streamUrl('netflix', `https://www.netflix.com/search?q=${encodeURIComponent(m.title.romaji)}`); color = "var(--netflix)"; } else if(s === 'crunchyroll') { result = streamUrl('crunchyroll', `https://www.crunchyroll.com/search?q=${encodeURIComponent(m.title.romaji)}`); color = "var(--crunchyroll)"; } else if(s === 'disney') { result = streamUrl('disney', `https://www.disneyplus.com/search?q=${encodeURIComponent(m.title.romaji)}`); color = "var(--disney)"; label = "Disney+"; } const tag = result.direct ? ` <span style="font-size:0.65rem; opacity:0.85;">✓</span>` : ''; linksHtml += `<a href="${result.url}" target="_blank" class="modal-btn" style="background:${color}">${label}${tag}</a>`; }); if(customStream.name && customStream.url) { let finalUrl = customStream.url.includes('{q}') ? customStream.url.replace('{q}', encodeURIComponent(m.title.romaji)) : customStream.url + encodeURIComponent(m.title.romaji); linksHtml += `<a href="${finalUrl}" target="_blank" class="modal-btn" style="background:white; color:black;">${customStream.name}</a>`; } document.getElementById('modal-links').innerHTML = linksHtml; document.getElementById('details-modal').style.display = 'flex'; if (activeStreams.includes('stremio')) { fetchImdbId(m.id).then(imdbId => { const btn = document.getElementById('stremio-link-btn'); if (!btn) return; if (imdbId) { const type = (m.format === 'MOVIE') ? 'movie' : 'series'; btn.href = `stremio:///detail/${type}/${imdbId}`; btn.innerHTML = `Stremio <span style="font-size:0.65rem; opacity:0.85;">✓</span>`; } }); } }
+    function openModal(enc) { 
+        closeCalendarPopover(); 
+        const m = JSON.parse(decodeURIComponent(escape(atob(enc)))); 
+        const d = new Date(m.airingAt * 1000); 
+        const dayTime = m.airingAt > 0 ? d.toLocaleDateString([], {weekday:'long', hour:'2-digit', minute:'2-digit'}) : (m.status || "N/A"); 
+        const addBtn = document.getElementById('add-to-list-btn'); 
+        addBtn.innerText = "+ Start Watching"; 
+        addBtn.style.background = "var(--green)"; 
+        addBtn.style.color = "var(--bg)"; 
+        addBtn.onclick = () => addToAniList(m.id, addBtn); 
+        checkStatus(m.id, addBtn); 
+        document.getElementById('modal-title').innerText = m.title.romaji; 
+        document.getElementById('modal-airing-info').innerHTML = `EP ${m.episode} // ${dayTime}`; 
+        document.getElementById('modal-year').innerText = m.seasonYear || ""; 
+        document.getElementById('modal-img-container').innerHTML = `<img src="${m.coverImage.extraLarge}">`; 
+        document.getElementById('modal-synopsis').innerHTML = m.description || ""; 
+        document.getElementById('modal-score').innerText = `★ ${m.averageScore ? (m.averageScore/10).toFixed(1) : 'N/A'}`; 
+        const demo = m.tags.find(t => t.category === "Demographic"); 
+        document.getElementById('modal-demo').innerText = demo ? demo.name : "N/A"; 
+        document.getElementById('modal-genres').innerHTML = m.genres.slice(0,3).map(g => `<span>${g}</span>`).join(''); 
+        document.getElementById('modal-anilist-link-container').innerHTML = `<div style="margin-top: 5px;"><a href="https://anilist.co/anime/${m.id}" target="_blank" class="mini-btn">AniList Hub</a></div>`; 
+        const extLinks = {}; 
+        (m.externalLinks || []).forEach(link => { extLinks[link.site.toLowerCase()] = link.url; }); 
+        function streamUrl(service, searchUrl) { const aliases = { netflix: ['netflix'], crunchyroll: ['crunchyroll'], disney: ['disney plus', 'disney+', 'disneyplus'], }; const candidates = aliases[service] || []; for (const name of candidates) { if (extLinks[name]) return { url: extLinks[name], direct: true }; } return { url: searchUrl, direct: false }; } 
+        let linksHtml = `<a href="https://myanimelist.net/anime/${m.idMal}" target="_blank" class="modal-btn" style="background:var(--mal)">MAL</a>`; 
+        activeStreams.forEach(s => { let result; let color = "var(--accent)"; let label = s; if(s === 'stremio') { result = { url: `stremio:///search?search=${encodeURIComponent(m.title.romaji)}`, direct: false }; color = "var(--stremio)"; linksHtml += `<a id="stremio-link-btn" href="${result.url}" class="modal-btn" style="background:${color}">Stremio</a>`; return; } else if(s === 'netflix') { result = streamUrl('netflix', `https://www.netflix.com/search?q=${encodeURIComponent(m.title.romaji)}`); color = "var(--netflix)"; } else if(s === 'crunchyroll') { result = streamUrl('crunchyroll', `https://www.crunchyroll.com/search?q=${encodeURIComponent(m.title.romaji)}`); color = "var(--crunchyroll)"; } else if(s === 'disney') { result = streamUrl('disney', `https://www.disneyplus.com/search?q=${encodeURIComponent(m.title.romaji)}`); color = "var(--disney)"; label = "Disney+"; } const tag = result.direct ? ` <span style="font-size:0.65rem; opacity:0.85;">✓</span>` : ''; linksHtml += `<a href="${result.url}" target="_blank" class="modal-btn" style="background:${color}">${label}${tag}</a>`; }); 
+        if(customStream.name && customStream.url) { let finalUrl = customStream.url.includes('{q}') ? customStream.url.replace('{q}', encodeURIComponent(m.title.romaji)) : customStream.url + encodeURIComponent(m.title.romaji); linksHtml += `<a href="${finalUrl}" target="_blank" class="modal-btn" style="background:white; color:black;">${customStream.name}</a>`; } 
+        document.getElementById('modal-links').innerHTML = linksHtml; 
+        document.getElementById('details-modal').style.display = 'flex'; 
+        if (activeStreams.includes('stremio')) { fetchImdbId(m.id).then(imdbId => { const btn = document.getElementById('stremio-link-btn'); if (!btn) return; if (imdbId) { const type = (m.format === 'MOVIE') ? 'movie' : 'series'; btn.href = `stremio:///detail/${type}/${imdbId}`; btn.innerHTML = `Stremio <span style="font-size:0.65rem; opacity:0.85;">✓</span>`; } }); } 
+    }
     function closeModal() { document.getElementById('details-modal').style.display = 'none'; }
     function closeConfirm() { document.getElementById('confirm-popup').style.display = 'none'; }
     function changePage(s) { currentPage += s; if(currentPage < 1) currentPage = 1; loadPage(); }
