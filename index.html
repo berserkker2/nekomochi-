@@ -139,7 +139,7 @@
         .deck-container { display: flex; justify-content: center; width: 100%; position: relative; }
         .deck-card { 
             width: 75px; height: 105px; object-fit: cover; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);
-            background: var(--card); transition: transform 0.2s, box-shadow 0.2s; box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+            background: var(--card); transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94); box-shadow: 2px 0 10px rgba(0,0,0,0.5);
             cursor: pointer; position: absolute; left: 50%;
         }
 
@@ -149,7 +149,7 @@
         .deck-container.is-pile .deck-card:nth-child(2) { transform: translateX(-35px) translateY(8px); z-index: 2; }
         .deck-container.is-pile .deck-card:nth-child(3) { transform: translateX(-15px) translateY(4px); z-index: 3; }
         .deck-container.is-pile .deck-card:nth-child(4) { transform: translateX(5px) translateY(0px); z-index: 4; }
-        .deck-card:hover { transform: scale(1.15) translateY(-15px) !important; z-index: 50 !important; box-shadow: 0 10px 20px rgba(0,0,0,0.6); }
+        .deck-card:hover { transform: scale(1.08) translateY(-5px) !important; z-index: 50 !important; box-shadow: 0 6px 18px rgba(0,0,0,0.55); }
         .deck-container.is-pile .deck-card:nth-child(n+5) { display: none; }
 
         .calendar-popover { display: none; position: absolute; background: var(--card); border: 2px solid var(--accent); border-radius: 12px; padding: 20px; z-index: 500; box-shadow: 0 20px 50px rgba(0,0,0,0.8); width: 250px; }
