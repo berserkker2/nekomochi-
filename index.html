@@ -138,7 +138,7 @@
         .modal-left { width: 35%; height: 100%; border-right: 1px solid #253244; }
         .modal-left img { width: 100%; height: 100%; object-fit: cover; }
         .modal-right { width: 65%; display: flex; flex-direction: column; padding: 40px; color: white; overflow-y: auto; }
-        .synopsis-scroll { flex-grow: 1; overflow-y: auto; color: var(--text); line-height: 1.7; margin: 20px 0; border-top: 1px solid #253244; padding-top: 20px; max-height: 30vh;}
+        .synopsis-scroll { flex-grow: 1; overflow-y: auto; color: var(--text); line-height: 1.7; margin: 20px 0; border-top: 1px solid #253244; padding-top: 20px;}
         .modal-btn { padding: 12px; border-radius: 8px; text-decoration: none; font-weight: 800; text-transform: uppercase; font-size: 0.75rem; flex: 1; text-align: center; color: white; border: none; cursor: pointer; transition: 0.2s; }
         
         .mini-btn { padding: 7px 16px; font-size: 0.75rem; background: var(--anilist); color: white; border-radius: 4px; font-weight: 800; text-transform: uppercase; text-decoration: none; display: inline-block; }
@@ -186,7 +186,7 @@
             .calendar-grid { gap: 4px; padding: 8px; }
             .calendar-day { min-height: 80px; padding: 22px 4px 4px 4px; }
             
-            /* Mobile Modal - Landscape & Portrait fully accessible */
+            /* Mobile Modal - landscape & portrait, synopsis limited to 4-5 lines */
             #details-modal { align-items: flex-end; }
             .modal-content { 
                 flex-direction: column; 
@@ -218,7 +218,7 @@
                 flex: 1;
                 display: flex;
                 flex-direction: column;
-                gap: 8px;
+                gap: 6px;
                 max-height: calc(92vh - 200px);
             }
             
@@ -239,22 +239,19 @@
                 line-height: 1;
             }
             
-            #modal-title { font-size: 1.4rem !important; font-weight: 800; line-height: 1.25; margin-bottom: 6px; letter-spacing: -0.2px; }
+            #modal-title { font-size: 1.35rem !important; font-weight: 800; line-height: 1.25; margin-bottom: 4px; letter-spacing: -0.2px; }
             
-            /* Meta row: flexible wrap */
-            .modal-right > div:first-of-type { flex-wrap: wrap; gap: 8px; margin-bottom: 8px; display: flex; align-items: center; }
+            .modal-right > div:first-of-type { flex-wrap: wrap; gap: 6px; margin-bottom: 4px; display: flex; align-items: center; }
             #modal-airing-info { font-size: 0.7rem; background: rgba(61,187,238,0.15); padding: 4px 12px; border-radius: 40px; display: inline-block; white-space: nowrap; }
             #modal-year { font-size: 0.7rem; background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 40px; }
             
-            /* Score and demo pills */
-            .pill { padding: 4px 12px; font-size: 0.7rem; margin-right: 8px; margin-bottom: 6px; display: inline-block; }
+            .pill { padding: 4px 12px; font-size: 0.7rem; margin-right: 8px; margin-bottom: 4px; display: inline-block; }
             
-            /* Add to list button - full width on mobile for better tap target */
             .modal-right > div[style*="display:flex; margin-bottom:15px; align-items: center;"] { 
                 display: flex; 
                 flex-wrap: wrap; 
-                gap: 10px; 
-                margin-bottom: 12px; 
+                gap: 8px; 
+                margin-bottom: 8px; 
                 align-items: center;
             }
             #add-to-list-btn { 
@@ -263,68 +260,82 @@
                 width: auto; 
                 background: var(--green); 
                 border-radius: 40px; 
-                padding: 10px 18px; 
-                font-size: 0.75rem;
+                padding: 8px 16px; 
+                font-size: 0.7rem;
                 flex: 0 0 auto;
             }
             
-            /* Genres: scrollable row */
-            #modal-genres { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 8px 0; }
-            #modal-genres span { font-size: 0.7rem; padding: 4px 12px; background: rgba(61,187,238,0.08); border-radius: 30px; white-space: nowrap; }
+            #modal-genres { display: flex; flex-wrap: wrap; gap: 6px; margin: 2px 0 6px 0; }
+            #modal-genres span { font-size: 0.65rem; padding: 3px 10px; background: rgba(61,187,238,0.08); border-radius: 30px; white-space: nowrap; }
             
-            /* Synopsis with comfortable height */
+            /* Synopsis: max 5 lines, scrollable if more, but compact */
             .synopsis-scroll { 
-                font-size: 0.85rem; 
-                line-height: 1.5; 
-                margin: 10px 0 14px 0; 
-                padding-top: 12px;
-                max-height: 25vh;
+                font-size: 0.8rem; 
+                line-height: 1.4; 
+                margin: 6px 0 8px 0; 
+                padding-top: 8px;
+                max-height: 6.5em; /* roughly 4-5 lines */
                 overflow-y: auto;
                 scrollbar-width: thin;
+                border-top: 1px solid #253244;
+                border-bottom: none;
             }
             
             /* Streaming links: horizontally scrollable on landscape, wrap on portrait */
             #modal-links { 
                 display: flex; 
-                flex-wrap: wrap;
+                flex-wrap: nowrap;
+                overflow-x: auto;
                 gap: 10px; 
-                margin-top: 8px;
-                justify-content: flex-start;
+                margin-top: 4px;
                 padding-bottom: 8px;
+                scrollbar-width: thin;
+                -webkit-overflow-scrolling: touch;
             }
             .modal-btn { 
                 flex: 0 0 auto; 
-                padding: 10px 18px; 
+                padding: 8px 16px; 
                 font-size: 0.7rem; 
                 border-radius: 40px;
-                min-width: 85px;
+                min-width: 80px;
                 text-align: center;
                 white-space: nowrap;
             }
             
-            .mini-btn { font-size: 0.7rem; padding: 6px 14px; border-radius: 40px; }
+            .mini-btn { font-size: 0.7rem; padding: 5px 12px; border-radius: 40px; }
             #preview-tooltip { display: none !important; }
             
-            /* Landscape orientation specific fixes */
-            @media (orientation: landscape) and (max-height: 500px) {
-                .modal-left { height: 140px; }
-                .modal-right { max-height: calc(92vh - 140px); padding: 12px 16px; }
-                #modal-title { font-size: 1.2rem !important; }
-                .synopsis-scroll { max-height: 20vh; margin: 8px 0; }
-                #modal-links { gap: 8px; }
-                .modal-btn { padding: 7px 14px; min-width: 75px; font-size: 0.65rem; }
-                .close-btn { width: 30px; height: 30px; font-size: 1.4rem; top: 6px; right: 10px; }
+            /* Landscape orientation specific: even more compact synopsis, scrollable buttons row */
+            @media (orientation: landscape) and (max-height: 550px) {
+                .modal-left { height: 130px; }
+                .modal-right { max-height: calc(92vh - 130px); padding: 10px 14px; gap: 4px; }
+                #modal-title { font-size: 1.15rem !important; margin-bottom: 2px; }
+                .synopsis-scroll { max-height: 4.2em; font-size: 0.75rem; margin: 4px 0; padding-top: 5px; }
+                .modal-btn { padding: 6px 12px; min-width: 70px; font-size: 0.65rem; }
+                #add-to-list-btn { padding: 6px 12px; font-size: 0.65rem; }
+                #modal-genres span { font-size: 0.6rem; padding: 2px 8px; }
+                .close-btn { width: 28px; height: 28px; font-size: 1.4rem; top: 6px; right: 10px; }
+                .pill { padding: 3px 10px; font-size: 0.65rem; }
+                #modal-airing-info, #modal-year { font-size: 0.65rem; }
             }
             
-            /* Extra small devices */
-            @media (max-width: 400px) {
+            /* When landscape but very narrow (e.g., foldables) */
+            @media (orientation: landscape) and (max-height: 450px) {
+                .modal-left { height: 110px; }
+                .synopsis-scroll { max-height: 3.5em; }
+                .modal-right { gap: 2px; }
+            }
+            
+            /* Extra small portrait devices */
+            @media (max-width: 400px) and (orientation: portrait) {
                 .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
                 .compact-grid { grid-template-columns: repeat(4, 1fr); }
                 .modal-left { height: 170px; }
                 .modal-right { padding: 14px; }
-                .modal-btn { padding: 8px 14px; min-width: 70px; }
-                #add-to-list-btn { padding: 8px 14px; }
-                #modal-title { font-size: 1.25rem !important; }
+                .modal-btn { padding: 7px 12px; min-width: 65px; }
+                #add-to-list-btn { padding: 7px 12px; }
+                #modal-title { font-size: 1.2rem !important; }
+                .synopsis-scroll { max-height: 6em; }
             }
         }
     </style>
@@ -375,7 +386,7 @@
     <div id="confirm-popup"><div class="popup-box"><div style="color:white; font-weight:800; font-size:1.2rem; margin-bottom:10px;">Remove Anime?</div><div style="color:var(--text); font-size:0.9rem; margin-bottom:25px; line-height:1.4;">This will remove the show from your AniList watchlist and reset your progress.</div><div class="popup-btns"><button class="modal-btn" style="background:#253244;" onclick="closeConfirm()">Cancel</button><button id="confirm-delete-btn" class="modal-btn" style="background:var(--danger);">Remove</button></div></div></div>
 
 <script>
-    // FULL SCRIPT (All functionality identical, only CSS enhancements for mobile modal)
+    // FULL SCRIPT (All functionality identical)
     let currentPage = 1;
     let homeView = localStorage.getItem('home_view') || 'latest';
     let currentView = homeView;
